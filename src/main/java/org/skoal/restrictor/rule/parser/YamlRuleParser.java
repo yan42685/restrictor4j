@@ -5,16 +5,10 @@ import org.yaml.snakeyaml.Yaml;
 
 import java.io.InputStream;
 
-public class YamlRuleParser implements RuleParser {
+public class YamlRuleParser extends RuleParser {
     @Override
-    public RawRule parse(String ruleText) {
-        return null;
-    }
-
-    @Override
-    public RawRule parse(InputStream in) {
+    protected RawRule loadRule(InputStream in) {
         Yaml yaml = new Yaml();
-        RawRule rawRule = yaml.loadAs(in, RawRule.class);
-        return rawRule;
+        return yaml.loadAs(in, RawRule.class);
     }
 }

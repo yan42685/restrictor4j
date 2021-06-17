@@ -1,13 +1,16 @@
+unit: HOURS
 clientRules:
   - clientId: aaaaa
     apiRules:
       - api: /test/1
         limit: 100
+        unit: SECONDS
         period: 60
       - api: /test/2
         limit: 30
         period: 60
   - clientId: bbbbb
+    unit: MINUTES
     apiRules:
       - api: /test/1
         limit: 10

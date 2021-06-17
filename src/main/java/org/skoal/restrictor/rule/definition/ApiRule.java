@@ -17,7 +17,7 @@ public class ApiRule {
     private int period;
 
     /**
-     * 时间单位
+     * 时间单位, 默认为秒
      */
     private TimeUnit unit;
 }

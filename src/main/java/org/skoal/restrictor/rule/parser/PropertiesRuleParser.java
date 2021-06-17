@@ -4,14 +4,9 @@ import org.skoal.restrictor.rule.definition.RawRule;
 
 import java.io.InputStream;
 
-public class PropertiesRuleParser implements RuleParser {
+public class PropertiesRuleParser extends RuleParser {
     @Override
-    public RawRule parse(String ruleText) {
-        return null;
-    }
-
-    @Override
-    public RawRule parse(InputStream in) {
+    protected RawRule loadRule(InputStream in) {
         return null;
     }
 }
