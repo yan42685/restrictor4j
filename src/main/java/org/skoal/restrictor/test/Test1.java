@@ -1,11 +1,16 @@
 package org.skoal.restrictor.test;
 
-import org.apache.commons.lang3.RandomUtils;
-import org.skoal.restrictor.utils.Lambda;
+import org.skoal.restrictor.restrictor.Restictor;
 
 public class Test1 {
     public static void main(String[] args) {
-        Lambda.repeat(10,
-                () -> System.out.println(RandomUtils.nextInt(3, 5)));
+//        Lambda.repeat(10,
+//                () -> System.out.println(RandomUtils.nextInt(3, 5)));
+        new Restictor();
+//        InputStream in = Test1.class.getResourceAsStream("/test.yaml");
+//        Yaml yaml = new Yaml();
+//        RawRule abc = yaml.loadAs(in, RawRule.class);
+//        System.out.println(abc);
     }
+
 }

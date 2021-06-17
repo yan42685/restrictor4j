@@ -1,0 +1,15 @@
+clientRules:
+  - clientId: aaaaa
+    apiRules:
+      - api: /test/1
+        limit: 100
+        period: 60
+      - api: /test/2
+        limit: 30
+        period: 60
+  - clientId: bbbbb
+    apiRules:
+      - api: /test/1
+        limit: 10
+      - api: /test/2
+        limit: 50
