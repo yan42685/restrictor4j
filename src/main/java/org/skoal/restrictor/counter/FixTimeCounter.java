@@ -28,7 +28,7 @@ public class FixTimeCounter implements LimitCounter {
 
     @Override
     public boolean tryAcquire() {
-        int updatedCount = currentCount.getAndIncrement();
+        int updatedCount = currentCount.incrementAndGet();
         if (updatedCount <= limit) {
             return true;
         }
@@ -37,8 +37,8 @@ public class FixTimeCounter implements LimitCounter {
             if (lock.tryLock(TRY_LOCK_TIMEOUT, TimeUnit.MILLISECONDS)) {
                 stopWatch.split();
                 if (stopWatch.getSplitTime() > millisecondsPeriod) {
-                    currentCount.set(1);
                     stopWatch.reset();
+                    currentCount.set(1);
                     return true;
                 }
             }
