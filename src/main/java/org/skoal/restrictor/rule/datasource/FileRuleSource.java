@@ -2,7 +2,10 @@ package org.skoal.restrictor.rule.datasource;
 
 import lombok.extern.slf4j.Slf4j;
 import org.skoal.restrictor.rule.definition.RawRule;
-import org.skoal.restrictor.rule.parser.*;
+import org.skoal.restrictor.rule.parser.JsonRuleParser;
+import org.skoal.restrictor.rule.parser.PropertiesRuleParser;
+import org.skoal.restrictor.rule.parser.RuleParser;
+import org.skoal.restrictor.rule.parser.YamlRuleParser;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,7 +15,7 @@ import java.util.Map;
 @Slf4j
 public class FileRuleSource implements RuleSource {
     private static final String DEFAULT_PATH = "/restrictor/restrictor-rule";
-    private static final String[] SUPPORTED_EXTENSIONS = {"json", "yaml", "yml", "properties", "xml"};
+    private static final String[] SUPPORTED_EXTENSIONS = {"json", "yaml", "yml", "properties"};
     private static final Map<String, RuleParser> PARSER_MAP = new HashMap<>();
 
     static {
@@ -20,7 +23,6 @@ public class FileRuleSource implements RuleSource {
         PARSER_MAP.put(SUPPORTED_EXTENSIONS[1], new YamlRuleParser());
         PARSER_MAP.put(SUPPORTED_EXTENSIONS[2], new YamlRuleParser());
         PARSER_MAP.put(SUPPORTED_EXTENSIONS[3], new PropertiesRuleParser());
-        PARSER_MAP.put(SUPPORTED_EXTENSIONS[4], new XmlRuleParser());
     }
 
     @Override
@@ -30,6 +32,7 @@ public class FileRuleSource implements RuleSource {
             String fullPath = DEFAULT_PATH + "." + extension;
             try (InputStream in = this.getClass().getResourceAsStream(fullPath)) {
                 if (in != null) {
+                    log.info("读取规则文件: " + fullPath);
                     RuleParser parser = PARSER_MAP.get(extension);
                     return parser.parse(in);
                 }
@@ -37,6 +40,7 @@ public class FileRuleSource implements RuleSource {
                 e.printStackTrace();
             }
         }
+        log.warn("未找到规则文件");
         return null;
     }
 }
