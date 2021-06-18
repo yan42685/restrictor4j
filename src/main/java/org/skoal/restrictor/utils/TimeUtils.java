@@ -1,9 +1,10 @@
 package org.skoal.restrictor.utils;
 
-import org.skoal.restrictor.basic.KnownException;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 public class TimeUtils {
     public static long toMillis(long period, TimeUnit timeUnit) {
         switch (timeUnit) {
@@ -16,7 +17,8 @@ public class TimeUtils {
             case MILLISECONDS:
                 return period;
             default:
-                throw new KnownException("不支持该时间单位: " + timeUnit);
+                log.error("不支持该时间单位: " + timeUnit);
+                return -1;
         }
     }
 }
