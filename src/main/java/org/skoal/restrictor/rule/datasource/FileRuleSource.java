@@ -11,7 +11,7 @@ import java.util.Map;
 
 @Slf4j
 public class FileRuleSource implements RuleSource {
-    private static final String DEFAULT_FILENAME = "restrictor-rule";
+    private static final String DEFAULT_PATH = "/restrictor/restrictor-rule";
     private static final String[] SUPPORTED_EXTENSIONS = {"json", "yaml", "yml", "properties", "xml"};
     private static final Map<String, RuleParser> PARSER_MAP = new HashMap<>();
 
@@ -26,21 +26,15 @@ public class FileRuleSource implements RuleSource {
     @Override
     public RawRule getRawRule() {
         for (String extension : SUPPORTED_EXTENSIONS) {
-            InputStream in = null;
-            try {
-                in = this.getClass().getResourceAsStream("/" + DEFAULT_FILENAME + "." + extension);
+            // try-with-resource自动关闭流 (只有实现了java.lang.AutoCloseable接口的类，才可以被自动关闭)
+            String fullPath = DEFAULT_PATH + "." + extension;
+            try (InputStream in = this.getClass().getResourceAsStream(fullPath)) {
                 if (in != null) {
                     RuleParser parser = PARSER_MAP.get(extension);
                     return parser.parse(in);
                 }
-            } finally {
-                if (in != null) {
-                    try {
-                        in.close();
-                    } catch (IOException e) {
-                        log.error("close file error: {0}", e);
-                    }
-                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
         return null;
