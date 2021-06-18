@@ -23,6 +23,8 @@
         <!--       暂时用不到guava (eventBus or cache ?) -->
         <!--        <guava.version>23.0</guava.version>-->
         <snakeyaml.version>1.25</snakeyaml.version>
+        <hutool.all.version>5.5.2</hutool.all.version>
+
     </properties>
 
     <dependencies>
@@ -51,6 +53,11 @@
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
             <version>${snakeyaml.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool.all.version}</version>
         </dependency>
         <!--        <dependency>-->
         <!--            <groupId>com.google.guava</groupId>-->

@@ -2,11 +2,11 @@ package org.skoal.restrictor.restrictor;
 
 import org.skoal.restrictor.counter.FixTimeCounter;
 import org.skoal.restrictor.counter.LimitCounter;
-import org.skoal.restrictor.rule.datasource.FileRuleSource;
 import org.skoal.restrictor.rule.definition.ApiRule;
 import org.skoal.restrictor.rule.definition.HashRefinedRule;
 import org.skoal.restrictor.rule.definition.RawRule;
 import org.skoal.restrictor.rule.definition.RefinedRule;
+import org.skoal.restrictor.rule.loader.FileRuleLoader;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -16,7 +16,7 @@ public class Restictor {
 
     public Restictor() {
         // TODO: 改成可配置的规则来源方式和优化的结构
-        RawRule rawRule = new FileRuleSource().getRawRule();
+        RawRule rawRule = new FileRuleLoader().getRawRule();
         System.out.println(rawRule);
         this.rules = new HashRefinedRule(rawRule);
     }
