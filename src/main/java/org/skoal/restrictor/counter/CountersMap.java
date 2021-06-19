@@ -21,11 +21,8 @@ public class CountersMap {
         fillMap(rawRule);
     }
 
-    public String generateKey(String clientId, String api) {
-        return clientId + ":" + api;
-    }
-
-    public LimitingCounter getCounter(String key) {
+    public LimitingCounter getCounter(String clientId, String api) {
+        String key = generateKey(clientId, api);
         return map.get(key);
     }
 
@@ -39,6 +36,10 @@ public class CountersMap {
                 map.put(key, getCounter(apiRule));
             });
         });
+    }
+
+    private String generateKey(String clientId, String api) {
+        return clientId + ":" + api;
     }
 
     private LimitingCounter getCounter(ApiRule apiRule) {
