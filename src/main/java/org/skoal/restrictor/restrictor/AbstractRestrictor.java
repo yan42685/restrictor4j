@@ -22,12 +22,8 @@ public class AbstractRestrictor {
 
     public boolean tryAcquire(String clientId, String api) {
         String counterKey = this.countersMap.generateKey(clientId, api);
-        if (!this.countersMap.containsKey(counterKey)) {
-            return true;
-        }
-
-        LimitingCounter counter = countersMap.getCounter(counterKey);
-        return counter.tryAcquire();
+        LimitingCounter counter = this.countersMap.getCounter(counterKey);
+        return counter == null || counter.tryAcquire();
     }
 
     private void loadConfig() {

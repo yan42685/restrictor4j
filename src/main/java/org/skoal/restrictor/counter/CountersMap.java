@@ -8,7 +8,6 @@ import org.skoal.restrictor.rule.definition.RawRule;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * 将原始结构的配置转化为能高效查询的Hash表
@@ -28,14 +27,6 @@ public class CountersMap {
 
     public LimitingCounter getCounter(String key) {
         return map.get(key);
-    }
-
-    public boolean containsKey(String key) {
-        return map.containsKey(key);
-    }
-
-    public Set<Map.Entry<String, LimitingCounter>> getEntrySet() {
-        return map.entrySet();
     }
 
     private void fillMap(RawRule rawRule) {
