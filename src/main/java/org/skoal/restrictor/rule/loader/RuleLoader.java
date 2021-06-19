@@ -1,12 +1,13 @@
 package org.skoal.restrictor.rule.loader;
 
+import cn.hutool.json.JSONUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.skoal.restrictor.rule.definition.RawRule;
 import org.yaml.snakeyaml.Yaml;
 
 public abstract class RuleLoader {
-    protected static final String[] SUPPORTED_EXTENSIONS = {"json", "yaml", "yml", "properties"};
+    protected static final String[] SUPPORTED_EXTENSIONS = {"json", "yaml", "yml"};
 
     @AllArgsConstructor
     @Data
@@ -15,7 +16,6 @@ public abstract class RuleLoader {
         String extension;
     }
 
-    // 模板方法模式
     public RawRule getRawRule() {
         return parse(load());
     }
@@ -31,23 +31,20 @@ public abstract class RuleLoader {
             case "yml":
                 rawRule = new Yaml().loadAs(text, RawRule.class);
                 break;
-//            case "json":
-//                // TODO
-//                break;
-//            case "properties":
-//                // TODO
-//                break;
+            case "json":
+                rawRule = JSONUtil.toBean(text, RawRule.class, false);
+                break;
             default:
                 throw new RuntimeException("不支持该规则文件的后缀名: " + extension);
         }
-        setPeriodAndUnitByDefaultValue(rawRule);
+        fillDefaultValue(rawRule);
         return rawRule;
     }
 
     /**
-     * 从上到下依次覆盖没有设置的 period 和 unit, 这样可以用一个设置管理一大片 api
+     * 用上层默认属性覆盖下层未设置的属性, 这样可以用一个设置管理一群 api
      */
-    private void setPeriodAndUnitByDefaultValue(RawRule rawRule) {
+    private void fillDefaultValue(RawRule rawRule) {
         rawRule.getClientRules().forEach(clientRule -> {
             if (clientRule.getPeriod() == 0) {
                 clientRule.setPeriod(rawRule.getPeriod());
