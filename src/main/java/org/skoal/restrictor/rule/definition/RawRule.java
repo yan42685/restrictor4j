@@ -14,4 +14,11 @@ public class RawRule {
     private TimeUnit unit;
     private List<ClientRule> clientRules;
 
+    @Data
+    public static class ClientRule {
+        private String clientId;
+        private int period;
+        private TimeUnit unit;
+        private List<ApiRule> apiRules;
+    }
 }
