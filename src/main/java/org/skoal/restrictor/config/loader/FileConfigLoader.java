@@ -29,7 +29,7 @@ public class FileConfigLoader {
             }
         }
         log.debug("未找到配置文件");
-        return null;
+        return new RestrictorConfig();
 
     }
 
