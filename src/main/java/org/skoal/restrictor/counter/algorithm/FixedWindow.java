@@ -1,4 +1,4 @@
-package org.skoal.restrictor.algorithm;
+package org.skoal.restrictor.counter.algorithm;
 
 import org.apache.commons.lang3.time.StopWatch;
 import org.skoal.restrictor.rule.definition.ApiRule;
@@ -12,7 +12,7 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * 固定时间算法
  */
-public class FixedWindow implements LimitingAlgorithm {
+public class FixedWindow implements LimitingCounter {
     private static final int TRY_LOCK_TIMEOUT = 200;
     private final int limit;
     private final long millisecondsPeriod;

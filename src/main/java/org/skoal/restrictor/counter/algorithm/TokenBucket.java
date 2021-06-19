@@ -1,8 +1,8 @@
-package org.skoal.restrictor.algorithm;
+package org.skoal.restrictor.counter.algorithm;
 
 import org.skoal.restrictor.rule.definition.ApiRule;
 
-public class TokenBucket implements LimitingAlgorithm {
+public class TokenBucket implements LimitingCounter {
     public TokenBucket(ApiRule apiRule) {
 
     }

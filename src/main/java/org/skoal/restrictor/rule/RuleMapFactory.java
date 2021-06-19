@@ -2,17 +2,16 @@ package org.skoal.restrictor.rule;
 
 import lombok.NonNull;
 import org.skoal.restrictor.config.enums.RuleSourceType;
-import org.skoal.restrictor.rule.definition.ApiRuleMap;
 import org.skoal.restrictor.rule.definition.RawRule;
 import org.skoal.restrictor.rule.loader.FileRuleLoader;
 import org.skoal.restrictor.rule.loader.ZookeeperRuleLoader;
 import org.skoal.restrictor.utils.Asserts;
 
 public class RuleMapFactory {
-    public static ApiRuleMap create(RuleSourceType sourceType) {
+    public static RawRule create(RuleSourceType sourceType) {
         RawRule rawRule = loadRawRule(sourceType);
         fillDefaultValue(rawRule);
-        return new ApiRuleMap(rawRule);
+        return rawRule;
     }
 
     private static RawRule loadRawRule(RuleSourceType sourceType) {

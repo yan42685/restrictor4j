@@ -1,8 +1,8 @@
-package org.skoal.restrictor.algorithm;
+package org.skoal.restrictor.counter.algorithm;
 
 import org.skoal.restrictor.rule.definition.ApiRule;
 
-public class SlidingWindow implements LimitingAlgorithm {
+public class SlidingWindow implements LimitingCounter {
     public SlidingWindow(ApiRule apiRule) {
 
     }
