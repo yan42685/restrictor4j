@@ -1,4 +1,4 @@
-package org.skoal.restrictor.basic;
+package org.skoal.restrictor.basic.datastructure;
 
 import org.apache.commons.lang3.StringUtils;
 

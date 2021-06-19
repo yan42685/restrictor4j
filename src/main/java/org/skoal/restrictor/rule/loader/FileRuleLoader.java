@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @Slf4j
-public class FileRuleLoader extends RuleLoader {
+public class FileRuleLoader extends AbstractRuleLoader {
     private static final String DEFAULT_PATH = "/restrictor/restrictor-rule";
 
     @Override

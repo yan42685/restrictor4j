@@ -10,11 +10,11 @@ import org.skoal.restrictor.rule.loader.FileRuleLoader;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-public class Restictor {
+public class MemoryRestictor {
     private final ConcurrentHashMap<String, LimitCounter> countersMap = new ConcurrentHashMap<>();
     private final RefinedRule rules;
 
-    public Restictor() {
+    public MemoryRestictor() {
         // TODO: 改成可配置的规则来源方式和优化的结构
         RawRule rawRule = new FileRuleLoader().getRawRule();
         System.out.println(rawRule);

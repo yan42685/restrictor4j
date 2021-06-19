@@ -1,6 +1,6 @@
 package org.skoal.restrictor.rule.definition;
 
-import org.skoal.restrictor.basic.Trie;
+import org.skoal.restrictor.basic.datastructure.Trie;
 
 /**
  * 相比hashmap，占用空间较少，耗时较多（约2-5倍的差距）

@@ -6,7 +6,7 @@ import lombok.Data;
 import org.skoal.restrictor.rule.definition.RawRule;
 import org.yaml.snakeyaml.Yaml;
 
-public abstract class RuleLoader {
+public abstract class AbstractRuleLoader {
     protected static final String[] SUPPORTED_EXTENSIONS = {"json", "yaml", "yml"};
 
     @AllArgsConstructor
