@@ -1,8 +1,9 @@
 package org.skoal.restrictor.counter;
 
-import lombok.NonNull;
 import org.skoal.restrictor.config.enums.LimitingAlgorithmType;
+import org.skoal.restrictor.config.enums.RuleSourceType;
 import org.skoal.restrictor.counter.algorithm.*;
+import org.skoal.restrictor.rule.RawRuleFactory;
 import org.skoal.restrictor.rule.definition.ApiRule;
 import org.skoal.restrictor.rule.definition.RawRule;
 
@@ -10,14 +11,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 将原始结构的配置转化为能高效查询的Hash表
+ * 将原始结构的限流规则转化为能高效查询的Hash表
  */
 public class CountersMap {
     private final LimitingAlgorithmType algorithmType;
     private final Map<String, LimitingCounter> map = new HashMap<>(256);
 
-    public CountersMap(LimitingAlgorithmType algorithmType, @NonNull RawRule rawRule) {
+    public CountersMap(LimitingAlgorithmType algorithmType, RuleSourceType sourceType) {
         this.algorithmType = algorithmType;
+        RawRule rawRule = RawRuleFactory.create(sourceType);
         fillMap(rawRule);
     }
 

@@ -1,41 +1,36 @@
 package org.skoal.restrictor.restrictor;
 
-import lombok.Data;
 import org.skoal.restrictor.config.definition.RestrictorConfig;
 import org.skoal.restrictor.config.loader.FileConfigLoader;
 import org.skoal.restrictor.counter.CountersMap;
 import org.skoal.restrictor.counter.algorithm.LimitingCounter;
-import org.skoal.restrictor.rule.RawRuleFactory;
-import org.skoal.restrictor.rule.definition.RawRule;
 
-@Data
 public class AbstractRestrictor {
-    private RestrictorConfig config;
-    private RawRule rawRule;
+    private final RestrictorConfig config;
     private CountersMap countersMap;
 
+    /**
+     * 通过文件配置
+     */
     public AbstractRestrictor() {
-        loadConfig();
-        loadRule();
-        initCountersMap();
+        config = new FileConfigLoader().load();
+        initAccordingToConfig();
+    }
+
+    /**
+     * 通过编程配置
+     */
+    public AbstractRestrictor(RestrictorConfig customConfig) {
+        config = customConfig;
+        initAccordingToConfig();
     }
 
     public boolean tryAcquire(String clientId, String api) {
-        LimitingCounter counter = this.countersMap.getCounter(clientId, api);
+        LimitingCounter counter = countersMap.getCounter(clientId, api);
         return counter == null || counter.tryAcquire();
     }
 
-    private void loadConfig() {
-        // 配置优先级：编程接口 > 配置文件 > 默认配置
-        this.config = new FileConfigLoader().load();
+    private void initAccordingToConfig() {
+        countersMap = new CountersMap(config.getAlgorithmType(), config.getRuleSourceType());
     }
-
-    private void loadRule() {
-        this.rawRule = RawRuleFactory.create(this.config.getRuleSourceType());
-    }
-
-    private void initCountersMap() {
-        this.countersMap = new CountersMap(this.config.getAlgorithmType(), rawRule);
-    }
-
 }
