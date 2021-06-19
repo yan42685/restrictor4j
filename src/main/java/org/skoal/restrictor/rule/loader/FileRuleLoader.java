@@ -25,7 +25,6 @@ public class FileRuleLoader extends AbstractRuleLoader {
                 e.printStackTrace();
             }
         }
-        log.warn("未找到规则文件");
-        return null;
+        throw new RuntimeException("未找到规则文件");
     }
 }

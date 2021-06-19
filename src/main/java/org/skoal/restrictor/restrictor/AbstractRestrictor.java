@@ -34,8 +34,7 @@ public class AbstractRestrictor {
         // 如果存在该规则就检查计数器是否允许调用该api
         String counterKey = clientId + ":" + api;
         if (!countersMap.containsKey(counterKey)) {
-            // TODO: 修改成Counter类型可配置
-            countersMap.put(counterKey, new FixedWindow(apiRule));
+            countersMap.put(counterKey, getLimitAlgorithm(apiRule));
         }
 
         LimitingAlgorithm counter = countersMap.get(counterKey);
@@ -69,7 +68,7 @@ public class AbstractRestrictor {
         }
     }
 
-    private LimitingAlgorithm getLimitingAlgorithm(ApiRule apiRule) {
+    private LimitingAlgorithm getLimitAlgorithm(ApiRule apiRule) {
         LimitingAlgorithmType algorithmType = this.config.getAlgorithmType();
         switch (algorithmType) {
             case FIxED_WINDOW:
