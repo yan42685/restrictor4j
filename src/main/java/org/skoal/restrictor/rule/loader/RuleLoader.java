@@ -25,7 +25,7 @@ public abstract class RuleLoader {
     private RawRule parse(RuleInfo ruleInfo) {
         String extension = ruleInfo.getExtension();
         String text = ruleInfo.getText();
-        RawRule rawRule = null;
+        RawRule rawRule;
         switch (extension) {
             case "yaml":
             case "yml":
