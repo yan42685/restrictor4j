@@ -4,13 +4,10 @@ import lombok.Data;
 import org.skoal.restrictor.algorithm.*;
 import org.skoal.restrictor.config.definition.RestrictorConfig;
 import org.skoal.restrictor.config.enums.LimitingAlgorithmType;
-import org.skoal.restrictor.config.enums.RuleSourceType;
-import org.skoal.restrictor.config.enums.RuleStructure;
 import org.skoal.restrictor.config.loader.FileConfigLoader;
-import org.skoal.restrictor.rule.definition.*;
-import org.skoal.restrictor.rule.loader.FileRuleLoader;
-import org.skoal.restrictor.rule.loader.ZookeeperRuleLoader;
-import org.skoal.restrictor.utils.Asserts;
+import org.skoal.restrictor.rule.RuleFactory;
+import org.skoal.restrictor.rule.definition.ApiRule;
+import org.skoal.restrictor.rule.definition.RefinedRule;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -47,25 +44,7 @@ public class AbstractRestrictor {
     }
 
     private void loadRule() {
-        RawRule rawRule = null;
-        // 按限流规则来源方式加载原始规则
-        RuleSourceType ruleSourceType = this.config.getRuleSourceType();
-        if (RuleSourceType.FILE.equals(ruleSourceType)) {
-            rawRule = new FileRuleLoader().getRawRule();
-        } else if (RuleSourceType.ZOOKEEPER.equals(ruleSourceType)) {
-            rawRule = new ZookeeperRuleLoader().getRawRule();
-        }
-
-        Asserts.notNull(rawRule);
-        System.out.println(rawRule);
-
-        // 按优化结构类型选择优化方案
-        RuleStructure ruleStructure = this.config.getRuleStructure();
-        if (RuleStructure.HASH_MAP.equals(ruleStructure)) {
-            this.rules = new HashMapRefinedRule(rawRule);
-        } else if (RuleStructure.TRIE.equals(ruleStructure)) {
-            this.rules = new TrieRefinedRule(rawRule);
-        }
+        this.rules = RuleFactory.create(config.getRuleSourceType(), config.getRuleStructureType());
     }
 
     private LimitingAlgorithm getLimitAlgorithm(ApiRule apiRule) {
