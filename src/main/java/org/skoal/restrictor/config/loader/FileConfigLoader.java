@@ -34,14 +34,21 @@ public class FileConfigLoader {
     }
 
     private RestrictorConfig parse(String text, String extension) {
-        switch (extension) {
-            case "json":
-                return JSONUtil.toBean(text, RestrictorConfig.class, false);
-            case "yaml":
-            case "yml":
-                return new Yaml().loadAs(text, RestrictorConfig.class);
-            default:
-                throw new RuntimeException("不支持的文件后缀名: " + extension);
+        try {
+            switch (extension) {
+                case "json":
+                    return JSONUtil.toBean(text, RestrictorConfig.class, false);
+                case "yaml":
+                case "yml":
+                    return new Yaml().loadAs(text, RestrictorConfig.class);
+                default:
+                    throw new RuntimeException("不支持的文件后缀名: " + extension);
+            }
+        } catch (Exception e) {
+            log.error("restrictor配置解析失败");
+            e.printStackTrace();
         }
+        // 配置解析失败就返回默认配置
+        return new RestrictorConfig();
     }
 }

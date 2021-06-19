@@ -25,6 +25,7 @@ public class FileRuleLoader extends AbstractRuleLoader {
                 e.printStackTrace();
             }
         }
-        throw new RuntimeException("未找到规则文件");
+        log.warn("未找到规则文件");
+        return new RuleInfo("", "yaml");
     }
 }

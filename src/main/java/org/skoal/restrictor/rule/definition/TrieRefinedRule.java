@@ -1,5 +1,6 @@
 package org.skoal.restrictor.rule.definition;
 
+import lombok.NonNull;
 import org.skoal.restrictor.basic.datastructure.Trie;
 
 public class TrieRefinedRule implements RefinedRule {
@@ -10,7 +11,10 @@ public class TrieRefinedRule implements RefinedRule {
         return trie.get(clientId + ":" + api);
     }
 
-    public TrieRefinedRule(RawRule rawRule) {
+    public TrieRefinedRule(@NonNull RawRule rawRule) {
+        if (rawRule.getClientRules() == null) {
+            return;
+        }
         rawRule.getClientRules().forEach(clientRule -> {
             clientRule.getApiRules().forEach(apiRule -> {
                 String key = clientRule.getClientId() + ":" + apiRule.getApi();
