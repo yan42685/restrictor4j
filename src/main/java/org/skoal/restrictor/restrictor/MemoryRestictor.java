@@ -1,7 +1,7 @@
 package org.skoal.restrictor.restrictor;
 
-import org.skoal.restrictor.counter.FixTimeCounter;
-import org.skoal.restrictor.counter.LimitCounter;
+import org.skoal.restrictor.algorithm.FixTimeCounter;
+import org.skoal.restrictor.algorithm.LimitCounter;
 import org.skoal.restrictor.rule.definition.ApiRule;
 import org.skoal.restrictor.rule.definition.HashRefinedRule;
 import org.skoal.restrictor.rule.definition.RawRule;
@@ -10,11 +10,12 @@ import org.skoal.restrictor.rule.loader.FileRuleLoader;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-public class MemoryRestictor {
+public class MemoryRestictor extends AbstractRestrictor {
     private final ConcurrentHashMap<String, LimitCounter> countersMap = new ConcurrentHashMap<>();
     private final RefinedRule rules;
 
     public MemoryRestictor() {
+        super();
         // TODO: 改成可配置的规则来源方式和优化的结构
         RawRule rawRule = new FileRuleLoader().getRawRule();
         System.out.println(rawRule);
@@ -37,5 +38,6 @@ public class MemoryRestictor {
         LimitCounter counter = countersMap.get(counterKey);
         return counter.tryAcquire();
     }
+
 
 }

@@ -1,4 +1,4 @@
-package org.skoal.restrictor.counter;
+package org.skoal.restrictor.algorithm;
 
 import org.apache.commons.lang3.time.StopWatch;
 import org.skoal.restrictor.rule.definition.ApiRule;
