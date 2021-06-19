@@ -4,16 +4,31 @@ import lombok.NonNull;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
-public class HashMapRefinedRule implements RefinedRule {
+/**
+ * 将原始结构的配置转化为能高效查询的Hash表
+ */
+public class ApiRuleMap {
     private final Map<String, ApiRule> map = new HashMap<>();
 
-    @Override
-    public ApiRule getApiRule(String clientId, String api) {
-        return map.get(clientId + ":" + api);
+    public String generateKey(String clientId, String api) {
+        return clientId + ":" + api;
     }
 
-    public HashMapRefinedRule(@NonNull RawRule rawRule) {
+    public ApiRule getApiRule(String key) {
+        return map.get(key);
+    }
+
+    public boolean containsKey(String key) {
+        return map.containsKey(key);
+    }
+
+    public Set<Map.Entry<String, ApiRule>> getEntrySet() {
+        return map.entrySet();
+    }
+
+    public ApiRuleMap(@NonNull RawRule rawRule) {
         if (rawRule.getClientRules() == null) {
             return;
         }

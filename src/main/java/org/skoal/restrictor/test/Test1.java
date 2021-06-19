@@ -11,7 +11,7 @@ public class Test1 {
         AtomicInteger passCount = new AtomicInteger(0);
         AtomicInteger refuseCount = new AtomicInteger(0);
         Lambda.repeat(220, () -> {
-            if (restictor.isAvailable("aaaaa", "/test/1")) {
+            if (restictor.tryAcquire("aaaaa", "/test/1")) {
                 passCount.incrementAndGet();
             } else {
                 refuseCount.incrementAndGet();

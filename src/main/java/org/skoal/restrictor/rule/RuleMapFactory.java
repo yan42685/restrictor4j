@@ -2,20 +2,17 @@ package org.skoal.restrictor.rule;
 
 import lombok.NonNull;
 import org.skoal.restrictor.config.enums.RuleSourceType;
-import org.skoal.restrictor.config.enums.RuleStructureType;
-import org.skoal.restrictor.rule.definition.HashMapRefinedRule;
+import org.skoal.restrictor.rule.definition.ApiRuleMap;
 import org.skoal.restrictor.rule.definition.RawRule;
-import org.skoal.restrictor.rule.definition.RefinedRule;
-import org.skoal.restrictor.rule.definition.TrieRefinedRule;
 import org.skoal.restrictor.rule.loader.FileRuleLoader;
 import org.skoal.restrictor.rule.loader.ZookeeperRuleLoader;
 import org.skoal.restrictor.utils.Asserts;
 
-public class RuleFactory {
-    public static RefinedRule create(RuleSourceType sourceType, RuleStructureType structureType) {
+public class RuleMapFactory {
+    public static ApiRuleMap create(RuleSourceType sourceType) {
         RawRule rawRule = loadRawRule(sourceType);
         fillDefaultValue(rawRule);
-        return refineStructure(rawRule, structureType);
+        return new ApiRuleMap(rawRule);
     }
 
     private static RawRule loadRawRule(RuleSourceType sourceType) {
@@ -55,18 +52,4 @@ public class RuleFactory {
             });
         });
     }
-
-    /**
-     * 优化查询结构
-     */
-    private static RefinedRule refineStructure(RawRule rawRule, RuleStructureType structureType) {
-        if (RuleStructureType.HASH_MAP.equals(structureType)) {
-            return new HashMapRefinedRule(rawRule);
-        } else if (RuleStructureType.TRIE.equals(structureType)) {
-            return new TrieRefinedRule(rawRule);
-        } else {
-            throw new RuntimeException("不支持的规则结构类型: " + structureType);
-        }
-    }
-
 }
