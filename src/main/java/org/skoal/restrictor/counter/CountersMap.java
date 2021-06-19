@@ -16,7 +16,7 @@ public class CountersMap {
     private final LimitingAlgorithmType algorithmType;
     private final Map<String, LimitingCounter> map = new HashMap<>(256);
 
-    public CountersMap(@NonNull RawRule rawRule, LimitingAlgorithmType algorithmType) {
+    public CountersMap(LimitingAlgorithmType algorithmType, @NonNull RawRule rawRule) {
         this.algorithmType = algorithmType;
         fillMap(rawRule);
     }

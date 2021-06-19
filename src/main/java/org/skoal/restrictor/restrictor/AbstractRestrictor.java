@@ -5,7 +5,7 @@ import org.skoal.restrictor.config.definition.RestrictorConfig;
 import org.skoal.restrictor.config.loader.FileConfigLoader;
 import org.skoal.restrictor.counter.CountersMap;
 import org.skoal.restrictor.counter.algorithm.LimitingCounter;
-import org.skoal.restrictor.rule.RuleMapFactory;
+import org.skoal.restrictor.rule.RawRuleFactory;
 import org.skoal.restrictor.rule.definition.RawRule;
 
 @Data
@@ -32,11 +32,11 @@ public class AbstractRestrictor {
     }
 
     private void loadRule() {
-        this.rawRule = RuleMapFactory.create(this.config.getRuleSourceType());
+        this.rawRule = RawRuleFactory.create(this.config.getRuleSourceType());
     }
 
     private void initCountersMap() {
-        this.countersMap = new CountersMap(rawRule, this.config.getAlgorithmType());
+        this.countersMap = new CountersMap(this.config.getAlgorithmType(), rawRule);
     }
 
 }

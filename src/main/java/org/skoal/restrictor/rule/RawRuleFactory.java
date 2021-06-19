@@ -7,7 +7,7 @@ import org.skoal.restrictor.rule.loader.FileRuleLoader;
 import org.skoal.restrictor.rule.loader.ZookeeperRuleLoader;
 import org.skoal.restrictor.utils.Asserts;
 
-public class RuleMapFactory {
+public class RawRuleFactory {
     public static RawRule create(RuleSourceType sourceType) {
         RawRule rawRule = loadRawRule(sourceType);
         fillDefaultValue(rawRule);
