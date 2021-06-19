@@ -12,7 +12,7 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * 固定时间算法
  */
-public class FixTimeCounter implements LimitCounter {
+public class FixedWindow implements LimitingAlgorithm {
     private static final int TRY_LOCK_TIMEOUT = 200;
     private final int limit;
     private final long millisecondsPeriod;
@@ -20,7 +20,7 @@ public class FixTimeCounter implements LimitCounter {
     private final Lock lock = new ReentrantLock();
     private final AtomicInteger currentCount = new AtomicInteger(0);
 
-    public FixTimeCounter(ApiRule apiRule) {
+    public FixedWindow(ApiRule apiRule) {
         limit = apiRule.getLimit();
         millisecondsPeriod = TimeUtils.toMillis(apiRule.getPeriod(), apiRule.getUnit());
         stopWatch.start();

@@ -1,5 +1,5 @@
 package org.skoal.restrictor.algorithm;
 
-public interface LimitCounter {
+public interface LimitingAlgorithm {
     boolean tryAcquire();
 }

@@ -1,7 +1,7 @@
 package org.skoal.restrictor.restrictor;
 
-import org.skoal.restrictor.algorithm.FixTimeCounter;
-import org.skoal.restrictor.algorithm.LimitCounter;
+import org.skoal.restrictor.algorithm.FixedWindow;
+import org.skoal.restrictor.algorithm.LimitingAlgorithm;
 import org.skoal.restrictor.rule.definition.ApiRule;
 import org.skoal.restrictor.rule.definition.HashRefinedRule;
 import org.skoal.restrictor.rule.definition.RawRule;
@@ -11,7 +11,7 @@ import org.skoal.restrictor.rule.loader.FileRuleLoader;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class MemoryRestictor extends AbstractRestrictor {
-    private final ConcurrentHashMap<String, LimitCounter> countersMap = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, LimitingAlgorithm> countersMap = new ConcurrentHashMap<>();
     private final RefinedRule rules;
 
     public MemoryRestictor() {
@@ -32,10 +32,10 @@ public class MemoryRestictor extends AbstractRestrictor {
         String counterKey = clientId + ":" + api;
         if (!countersMap.containsKey(counterKey)) {
             // TODO: 修改成Counter类型可配置
-            countersMap.put(counterKey, new FixTimeCounter(apiRule));
+            countersMap.put(counterKey, new FixedWindow(apiRule));
         }
 
-        LimitCounter counter = countersMap.get(counterKey);
+        LimitingAlgorithm counter = countersMap.get(counterKey);
         return counter.tryAcquire();
     }
 
