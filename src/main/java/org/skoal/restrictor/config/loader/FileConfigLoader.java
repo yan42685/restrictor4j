@@ -20,7 +20,7 @@ public class FileConfigLoader {
             String fullPath = DEFAULT_PATH + "." + extension;
             try (InputStream in = this.getClass().getResourceAsStream(fullPath)) {
                 if (in != null) {
-                    log.info("读取配置文件: " + fullPath);
+                    log.info("读取配置文件: classpath:" + fullPath);
                     String ruleText = IoUtil.read(in, "utf-8");
                     return parse(ruleText, extension);
                 }
