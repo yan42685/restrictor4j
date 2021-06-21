@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.skoal.restrictor.rule.definition.RawRule;
-import org.yaml.snakeyaml.Yaml;
+import org.skoal.restrictor.utils.YamlUtils;
 
 @Slf4j
 public abstract class AbstractRuleLoader {
@@ -32,7 +32,7 @@ public abstract class AbstractRuleLoader {
             switch (extension) {
                 case "yaml":
                 case "yml":
-                    rawRule = new Yaml().loadAs(text, RawRule.class);
+                    rawRule = YamlUtils.toBean(text, RawRule.class);
                     break;
                 case "json":
                     rawRule = JSONUtil.toBean(text, RawRule.class, false);

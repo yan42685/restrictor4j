@@ -4,7 +4,7 @@ import cn.hutool.core.io.IoUtil;
 import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.skoal.restrictor.config.definition.RestrictorConfig;
-import org.yaml.snakeyaml.Yaml;
+import org.skoal.restrictor.utils.YamlUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,7 +40,7 @@ public class FileConfigLoader {
                     return JSONUtil.toBean(text, RestrictorConfig.class, false);
                 case "yaml":
                 case "yml":
-                    return new Yaml().loadAs(text, RestrictorConfig.class);
+                    return YamlUtils.toBean(text, RestrictorConfig.class);
                 default:
                     throw new RuntimeException("不支持的文件后缀名: " + extension);
             }
