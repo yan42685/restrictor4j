@@ -15,10 +15,14 @@ public class RestrictorConfig {
     /**
      * 限流规则来源：FILE or ZOOKEEPER
      */
+    @Builder.Default
     private RuleSourceType ruleSourceType = RuleSourceType.FILE;
     // TODO: 改成令牌桶
+    @Builder.Default
     private LimitingAlgorithmType algorithmType = LimitingAlgorithmType.FIxED_WINDOW;
-    private RedisConfig redisConfig;
-    private ZookeeperConfig zookeeperConfig;
+    @Builder.Default
+    private RedisConfig redisConfig = new RedisConfig();
+    @Builder.Default
+    private ZookeeperConfig zookeeperConfig = new ZookeeperConfig();
 
 }
