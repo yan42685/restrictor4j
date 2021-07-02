@@ -18,11 +18,11 @@ public abstract class AbstractRuleLoader {
         String extension;
     }
 
-    public RawRule getRawRule() {
-        return parse(load());
+    public RawRule load() {
+        return parse(loadRuleInfo());
     }
 
-    protected abstract RuleInfo load();
+    protected abstract RuleInfo loadRuleInfo();
 
     private RawRule parse(RuleInfo ruleInfo) {
         String extension = ruleInfo.getExtension();

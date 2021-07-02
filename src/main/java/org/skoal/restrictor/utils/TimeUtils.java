@@ -6,6 +6,9 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class TimeUtils {
+    /**
+     * @param timeUnit 仅支持 HOURS,MINUTES,SECONDS,MILLISECONDS
+     */
     public static long toMillis(long period, TimeUnit timeUnit) {
         switch (timeUnit) {
             case HOURS:
@@ -17,8 +20,7 @@ public class TimeUtils {
             case MILLISECONDS:
                 return period;
             default:
-                log.error("不支持该时间单位: " + timeUnit);
-                return -1;
+                throw new RuntimeException("不支持该时间单位: " + timeUnit);
         }
     }
 }

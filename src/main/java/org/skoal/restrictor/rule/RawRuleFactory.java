@@ -18,9 +18,9 @@ public class RawRuleFactory {
         RawRule rawRule = null;
         // 按限流规则来源方式加载原始规则
         if (RuleSourceType.FILE.equals(sourceType)) {
-            rawRule = new FileRuleLoader().getRawRule();
+            rawRule = new FileRuleLoader().load();
         } else if (RuleSourceType.ZOO_KEEPER.equals(sourceType)) {
-            rawRule = new ZookeeperRuleLoader().getRawRule();
+            rawRule = new ZookeeperRuleLoader().load();
         }
         Asserts.notNull(rawRule, "不支持的sourceType: " + sourceType);
         return rawRule;

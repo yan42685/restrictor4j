@@ -11,7 +11,7 @@ public class FileRuleLoader extends AbstractRuleLoader {
     private static final String DEFAULT_PATH = "/restrictor/restrictor-rule";
 
     @Override
-    protected RuleInfo load() {
+    protected RuleInfo loadRuleInfo() {
         for (String extension : SUPPORTED_EXTENSIONS) {
             // try-with-resource自动关闭流 (只有实现了java.lang.AutoCloseable接口的类，才可以被自动关闭)
             String fullPath = DEFAULT_PATH + "." + extension;
