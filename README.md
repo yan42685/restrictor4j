@@ -11,11 +11,11 @@
 在 classpath:/restrictor/restrictor-rule.yaml 写入限流配置（没找到限流文件也可以正常运行，只是不进行任何限流） 限流规则示例：
 
 ```yaml
-unit: HOURS  # 时间单位, 可选 HOURS、MINUTES、SECONDS、MILLISECONDS
-period: 1  # 限流周期包含多少个单位时间
+unit: HOURS  # 时间单位, 可选 HOURS、MINUTES、SECONDS、MILLISECONDS, 默认 SECONDS
+period: 1  # 限流周期包含多少个单位时间, 默认60
 clientRules:
   - clientId: aaaa  # 客户端 id, 可以为不同的客户端设置不同的限流规则
-    unit: MINUTES  # 限定范围小的配置能够覆盖范围大的配置，优先级如下： api配置 > client配置 > 全局
+    unit: MINUTES  # 限定范围小的配置能够覆盖范围大的配置，优先级如下： api配置 > client配置 > 全局配置
     period: 3
     apiRules:
       - api: /test/1
