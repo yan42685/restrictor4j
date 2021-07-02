@@ -2,9 +2,8 @@ package org.skoal.restrictor.counter;
 
 import org.skoal.restrictor.config.enums.LimitingAlgorithmType;
 import org.skoal.restrictor.config.enums.RuleSourceType;
-import org.skoal.restrictor.counter.algorithm.*;
+import org.skoal.restrictor.counter.algorithm.LimitingCounter;
 import org.skoal.restrictor.rule.RawRuleFactory;
-import org.skoal.restrictor.rule.definition.ApiRule;
 import org.skoal.restrictor.rule.definition.RawRule;
 
 import java.util.HashMap;
@@ -35,27 +34,13 @@ public class CountersMap {
         rawRule.getClientRules().forEach(clientRule -> {
             clientRule.getApiRules().forEach(apiRule -> {
                 String key = generateKey(clientRule.getClientId(), apiRule.getApi());
-                map.put(key, getCounter(apiRule));
+                LimitingCounter limitingCounter = CounterFactory.create(this.algorithmType, apiRule);
+                map.put(key, limitingCounter);
             });
         });
     }
 
     private String generateKey(String clientId, String api) {
         return clientId + ":" + api;
-    }
-
-    private LimitingCounter getCounter(ApiRule apiRule) {
-        switch (this.algorithmType) {
-            case FIXED_WINDOW:
-                return new FixedWindow(apiRule);
-            case SLIDING_WINDOW:
-                return new SlidingWindow(apiRule);
-            case LEAKY_BUCKET:
-                return new LeakyBucket(apiRule);
-            case TOKEN_BUCKET:
-                return new TokenBucket(apiRule);
-            default:
-                throw new RuntimeException("不支持的限流算法: " + algorithmType);
-        }
     }
 }
