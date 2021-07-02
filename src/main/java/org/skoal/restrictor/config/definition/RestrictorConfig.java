@@ -13,7 +13,7 @@ import org.skoal.restrictor.config.enums.RuleSourceType;
 @Data
 public class RestrictorConfig {
     /**
-     * 限流规则来源：FILE or ZOOKEEPER
+     * 限流规则来源：FILE or ZOO_KEEPER
      */
     @Builder.Default
     private RuleSourceType ruleSourceType = RuleSourceType.FILE;
