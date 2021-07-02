@@ -46,7 +46,7 @@ public class CountersMap {
 
     private LimitingCounter getCounter(ApiRule apiRule) {
         switch (this.algorithmType) {
-            case FIxED_WINDOW:
+            case FIXED_WINDOW:
                 return new FixedWindow(apiRule);
             case SLIDING_WINDOW:
                 return new SlidingWindow(apiRule);

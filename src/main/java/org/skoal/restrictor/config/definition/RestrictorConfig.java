@@ -19,7 +19,7 @@ public class RestrictorConfig {
     private RuleSourceType ruleSourceType = RuleSourceType.FILE;
     // TODO: 改成令牌桶
     @Builder.Default
-    private LimitingAlgorithmType algorithmType = LimitingAlgorithmType.FIxED_WINDOW;
+    private LimitingAlgorithmType algorithmType = LimitingAlgorithmType.FIXED_WINDOW;
     @Builder.Default
     private RedisConfig redisConfig = new RedisConfig();
     @Builder.Default

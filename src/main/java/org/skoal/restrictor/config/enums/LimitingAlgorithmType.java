@@ -13,5 +13,5 @@ package org.skoal.restrictor.config.enums;
  * 为了保护第三方的系统不被自身的调用打垮，便可以通过漏斗算法进行限流，保证自身的流量平稳的打到第三方的接口上。
  */
 public enum LimitingAlgorithmType {
-    FIxED_WINDOW, SLIDING_WINDOW, LEAKY_BUCKET, TOKEN_BUCKET
+    FIXED_WINDOW, SLIDING_WINDOW, LEAKY_BUCKET, TOKEN_BUCKET
 }
