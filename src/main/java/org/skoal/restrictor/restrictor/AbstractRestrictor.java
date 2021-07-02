@@ -5,7 +5,7 @@ import org.skoal.restrictor.config.loader.FileConfigLoader;
 import org.skoal.restrictor.counter.CountersMap;
 import org.skoal.restrictor.counter.algorithm.LimitingCounter;
 
-public class AbstractRestrictor {
+public class AbstractRestrictor implements Restrictor {
     private final RestrictorConfig config;
     private CountersMap countersMap;
 
@@ -25,6 +25,7 @@ public class AbstractRestrictor {
         initAccordingToConfig();
     }
 
+    @Override
     public boolean tryAcquire(String clientId, String api) {
         LimitingCounter counter = countersMap.getCounter(clientId, api);
         return counter == null || counter.tryAcquire();
