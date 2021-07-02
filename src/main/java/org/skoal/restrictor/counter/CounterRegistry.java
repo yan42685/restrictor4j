@@ -12,11 +12,11 @@ import java.util.Map;
 /**
  * 将原始结构的限流规则转化为能高效查询的Hash表
  */
-public class CountersMap {
+public class CounterRegistry {
     private final LimitingAlgorithmType algorithmType;
     private final Map<String, LimitingCounter> map = new HashMap<>(256);
 
-    public CountersMap(LimitingAlgorithmType algorithmType, RuleSourceType sourceType) {
+    public CounterRegistry(LimitingAlgorithmType algorithmType, RuleSourceType sourceType) {
         this.algorithmType = algorithmType;
         RawRule rawRule = RawRuleFactory.create(sourceType);
         fillMap(rawRule);
@@ -34,8 +34,8 @@ public class CountersMap {
         rawRule.getClientRules().forEach(clientRule -> {
             clientRule.getApiRules().forEach(apiRule -> {
                 String key = generateKey(clientRule.getClientId(), apiRule.getApi());
-                LimitingCounter limitingCounter = CounterFactory.create(this.algorithmType, apiRule);
-                map.put(key, limitingCounter);
+                LimitingCounter counter = CounterFactory.create(this.algorithmType, apiRule);
+                map.put(key, counter);
             });
         });
     }

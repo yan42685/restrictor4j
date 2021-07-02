@@ -2,12 +2,12 @@ package org.skoal.restrictor.restrictor;
 
 import org.skoal.restrictor.config.definition.RestrictorConfig;
 import org.skoal.restrictor.config.loader.FileConfigLoader;
-import org.skoal.restrictor.counter.CountersMap;
+import org.skoal.restrictor.counter.CounterRegistry;
 import org.skoal.restrictor.counter.algorithm.LimitingCounter;
 
 public class AbstractRestrictor implements Restrictor {
     private final RestrictorConfig config;
-    private CountersMap countersMap;
+    private CounterRegistry counterRegistry;
 
     /**
      * 通过文件配置
@@ -27,11 +27,11 @@ public class AbstractRestrictor implements Restrictor {
 
     @Override
     public boolean tryAcquire(String clientId, String api) {
-        LimitingCounter counter = countersMap.getCounter(clientId, api);
+        LimitingCounter counter = counterRegistry.getCounter(clientId, api);
         return counter == null || counter.tryAcquire();
     }
 
     private void initAccordingToConfig() {
-        countersMap = new CountersMap(config.getAlgorithmType(), config.getRuleSourceType());
+        counterRegistry = new CounterRegistry(config.getAlgorithmType(), config.getRuleSourceType());
     }
 }
