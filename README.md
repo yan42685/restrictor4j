@@ -6,9 +6,29 @@
 
 在 classpath:/restrictor/restrictor-config.yaml 写入限流器配置（没找到配置文件就会用默认配置）
 
+默认配置:
+
+```yaml
+ruleSourceType: FILE  # 规则来源 可选 FILE，ZOO_KEEPER
+algorithmType: FIXED_WINDOW  # 限流算法类型 可选 FIXED_WINDOW, SLIDING_WINDOW, LEAKY_BUCKET, TOKEN_BUCKET
+redisConfig:
+  address: null
+  port: 6379
+  maxWaitMillis: 10
+  maxTotal: 50
+  maxIdle: 50
+  minIdle: 20
+  testOnBorrow: true
+zookeeperConfig:
+  address: null
+  rulePath: /restrictor/restrictor-rule
+```
+
 ### 限流规则配置
 
-在 classpath:/restrictor/restrictor-rule.yaml 写入限流规则配置（没找到规则文件也可以正常运行，只是不进行任何限流） 限流规则示例：
+在 classpath:/restrictor/restrictor-rule.yaml 写入限流规则配置（没找到规则文件也可以正常运行，只是不进行任何限流）
+
+规则示例:
 
 ```yaml
 unit: HOURS  # 时间单位, 可选 HOURS、MINUTES、SECONDS、MILLISECONDS, 默认 SECONDS
